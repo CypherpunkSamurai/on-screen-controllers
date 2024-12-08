@@ -1,11 +1,11 @@
-# ts-stick 🎮
+# on-screen-controllers 🎮
 
 A lightweight TypeScript library for adding on-screen game controls to web applications. Includes customizable joystick, d-pad, buttons and slider controls.
 
-[![npm version](https://badge.fury.io/js/ts-stick.svg)](https://www.npmjs.com/package/ts-stick)
+[![npm version](https://badge.fury.io/js/on-screen-controllers.svg)](https://www.npmjs.com/package/on-screen-controllers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9+-blue.svg)](https://www.typescriptlang.org/)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/ts-stick)](https://bundlephobia.com/package/ts-stick)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/on-screen-controllers)](https://bundlephobia.com/package/on-screen-controllers)
 
 ## Key Features
 
@@ -20,7 +20,7 @@ A lightweight TypeScript library for adding on-screen game controls to web appli
 
 ## Quick Start
 
-You can use ts-stick in your project by including the library from a CDN or installing it via NPM.
+You can use on-screen-controllers in your project by including the library from a CDN or installing it via NPM.
 
 ### Using NPM
 
@@ -28,13 +28,13 @@ Install the package using your preferred package manager:
 
 ```bash
 # npm
-npm install ts-stick
+npm install on-screen-controllers
 
 # pnpm
-pnpm add ts-stick
+pnpm add on-screen-controllers
 
 # yarn
-yarn add ts-stick
+yarn add on-screen-controllers
 ```
 
 #### Joystick Controller
@@ -42,7 +42,7 @@ yarn add ts-stick
 JoyStickController is a virtual joystick that can be used to control the movement of an object in a 2D space. The controller can be customized with different colors, sizes, and sensitivity levels. The `onInputCallback` function is called whenever the joystick is moved, providing the x and y coordinates of the thumbstick within the range of -1 to 1.
 
 ```typescript
-import { JoystickController } from "ts-stick";
+import { JoystickController } from "on-screen-controllers";
 
 const joystick = new JoystickController({
 	container: document.getElementById("joystick-container"),
@@ -60,7 +60,7 @@ const joystick = new JoystickController({
 DpadController is a directional pad that can be used to control the movement of an object in 9 directions (`up`, `down`, `left`, `right`, `up-left`, `up-right`, `down-left`, `down-right`, `center`). The controller can be customized with different colors, sizes, and callback functions. The `onPressCallback` function is called whenever a direction is pressed.
 
 ```typescript
-import { DpadController } from "ts-stick";
+import { DpadController } from "on-screen-controllers";
 
 const dpad = new DpadController({
 	container: document.getElementById("dpad-container"),
@@ -78,7 +78,7 @@ const dpad = new DpadController({
 ButtonController is a simple button that can be used to trigger an action when pressed. The controller can be customized with different colors, sizes, and an optional icon. The `onPressCallback` function is called whenever the button is pressed.
 
 ```typescript
-import { ButtonController } from "ts-stick";
+import { ButtonController } from "on-screen-controllers";
 
 const button = new ButtonController({
 	container: document.getElementById("button-container"),
@@ -98,7 +98,7 @@ const button = new ButtonController({
 RetractableSlider is a vertical or horizontal slider that can be used to outpu a value when moved. The controller can be customized with different colors, sizes, and callback functions. The `onSlideCallback` function is called whenever the slider is moved, providing the current value between 0 and 100.
 
 ```typescript
-import { RetractableSlider } from "ts-stick";
+import { RetractableSlider } from "on-screen-controllers";
 
 const slider = new RetractableSlider({
 	container: document.getElementById("slider-container"),
@@ -121,7 +121,7 @@ Planned Features and Improvements:
 
 ## Browser Support
 
-ts-stick is designed to work on all modern browsers and devices. The library has been tested on the following platforms:
+on-screen-controllers is designed to work on all modern browsers and devices. The library has been tested on the following platforms:
 
 - Chrome (latest) 🌐
 - Firefox (latest) 🦊
@@ -136,4 +136,4 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ## License
 
-ts-stick is [MIT licensed](LICENSE).
+on-screen-controllers is [MIT licensed](LICENSE).

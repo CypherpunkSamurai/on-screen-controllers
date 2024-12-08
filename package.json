@@ -1,7 +1,7 @@
 {
-  "name": "ts-stick",
+  "name": "on-screen-controllers",
   "version": "1.0.0",
-  "description": "A Typescript on-screen joystick using DOM apis",
+  "description": "Typescript (and JavaScript) on-screen controllers using DOM apis",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -59,7 +59,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CypherpunkSamurai/ts-stick.git"
+    "url": "https://github.com/CypherpunkSamurai/on-screen-controllers.git"
   },
   "keywords": [
     "typescript",
@@ -73,7 +73,7 @@
     "dom"
   ],
   "bugs": {
-    "url": "https://github.com/CypherpunkSamurai/ts-stick/issues"
+    "url": "https://github.com/CypherpunkSamurai/on-screen-controllers/issues"
   },
-  "homepage": "https://github.com/CypherpunkSamurai/ts-stick#readme"
+  "homepage": "https://github.com/CypherpunkSamurai/on-screen-controllers#readme"
 }
