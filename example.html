@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>On-Screen Controllers Demo</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: Arial, sans-serif;
+				background: #1a1a1a;
+				color: #fff;
+				min-height: 100vh;
+				overflow: hidden;
+			}
+
+			.container {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1rem;
+				padding: 1rem;
+				height: 100vh;
+			}
+
+			.controller-section {
+				background: rgba(255, 255, 255, 0.1);
+				border-radius: 10px;
+				padding: 1rem;
+				position: relative;
+				min-height: calc(50vh - 2rem);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.output {
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+				font-family: monospace;
+				font-size: 0.8rem;
+				color: #4caf50;
+			}
+
+			@media (max-width: 768px) {
+				.container {
+					grid-template-columns: 1fr;
+				}
+				.controller-section {
+					min-height: calc(25vh - 1rem);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="controller-section" id="joystick-container">
+				<div class="output" id="joystick-output">Joystick: waiting...</div>
+			</div>
+			<div class="controller-section" id="dpad-container">
+				<div class="output" id="dpad-output">D-pad: waiting...</div>
+			</div>
+			<div class="controller-section" id="button-container">
+				<div class="output" id="button-output">Button: waiting...</div>
+			</div>
+			<div class="controller-section" id="slider-container">
+				<div class="output" id="slider-output">Slider: waiting...</div>
+			</div>
+		</div>
+
+		<script src="dist/OnScreenControllers.min.js"></script>
+		<!-- use cdn -->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/on-screen-controllers@latest/dist/OnScreenControllers.min.js"></script> -->
+		<script>
+			// container
+			const joystickcontainer = document.getElementById("joystick-container");
+			const dpadcontainer = document.getElementById("dpad-container");
+			const buttonContainer = document.getElementById("button-container");
+			const slidercontainer = document.getElementById("slider-container");
+
+			// output text
+			const joystickOutput = document.getElementById("joystick-output");
+			const dpadOutput = document.getElementById("dpad-output");
+			const buttonOutput = document.getElementById("button-output");
+			const sliderOutput = document.getElementById("slider-output");
+
+			// Initialize Joystick
+			const joystick = new OnScreenControllers.JoystickController({
+				container: joystickcontainer,
+				top: "50%",
+				left: "50%",
+				radius: 100,
+				color: "gray",
+				thumbColor: "#333",
+				rotation: 0,
+				onInputCallback: (x, y) => {
+					console.log(`Joystick Moved: x=${x}, y=${y}`);
+					joystickOutput.textContent = `Joystick: x=${x}, y=${y}`;
+				},
+				onReleaseCallback: (x, y) => {
+					console.log("Joystick Released");
+					joystickOutput.textContent = `Joystick: x=0, y=0`;
+				},
+                verboseLogging: true,
+			});
+
+			// Initialize D-pad
+			const dpad = new OnScreenControllers.DpadController({
+				top: "50%",
+				left: "50%",
+				colorBase: "#000000",
+				colorsPressed: "#FFFFFF",
+				radius: 100,
+				container: dpadcontainer,
+				onPressCallback: (direction) => {
+					console.log(`D-Pad Pressed: ${direction}`);
+					dpadOutput.textContent = `D-pad: ${direction}`;
+				},
+				onReleaseCallback: (direction) => {
+					console.log("test");
+					dpadOutput.textContent = `D-pad: ${direction}`;
+				},
+				verboseLogging: false,
+				rotation: -90,
+			});
+
+			// Initialize Button
+			const button = new OnScreenControllers.ButtonController({
+				width: "100px",
+				height: "100px",
+				top: "50%",
+				left: "50%",
+				color: "gray",
+				radius: 50,
+				container: buttonContainer,
+				onPressCallback: () => {
+					console.log("Button Pressed");
+					buttonOutput.textContent = "Button: PRESSED";
+				},
+				onReleaseCallback: () => {
+					console.log("Button Released");
+					buttonOutput.textContent = "Button: released";
+				},
+				verboseLogging: true,
+			});
+
+			// Initialize Slider
+			const slider = new OnScreenControllers.RetrackableSlider({
+				top: "50%",
+				left: "50%",
+				width: "1rem",
+				height: "5rem",
+				color: "gray",
+				borderColor: "gray",
+				borderWidth: "2px",
+				borderRadius: "2px",
+				direction: "vertical",
+				container: slidercontainer,
+				onSlideCallback: (value) => {
+					console.log(`Slider Sliding: ${value}`);
+					sliderOutput.textContent = `Slider: ${value.toFixed(1)}%`;
+				},
+				onReleaseCallback: () => {
+					console.log("Slider Released");
+					sliderOutput.textContent = "Slider: released";
+				},
+				verboseLogging: true,
+			});
+		</script>
+	</body>
+</html>

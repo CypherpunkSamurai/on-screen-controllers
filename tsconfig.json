@@ -2,11 +2,11 @@
   /*  https://aka.ms/tsconfig */
   "compilerOptions": {
     /* Language and Environment */
-    "target": "ES2020",
+    "target": "es2018",
     "useDefineForClassFields": true,
     /* Modules */
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "esnext",
+    "lib": ["dom", "es2018"],
     "moduleResolution": "bundler",
     "noEmit": true,
     "allowImportingTsExtensions": true,
@@ -22,6 +22,7 @@
 
     /* Emit */
     "declaration": true,
+    "declarationDir": "./dist/types",
     "outDir": "./dist",
     "removeComments": true,
     "noUnusedLocals": true,
@@ -31,5 +32,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

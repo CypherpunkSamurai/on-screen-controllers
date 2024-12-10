@@ -2,59 +2,74 @@
   "name": "on-screen-controllers",
   "version": "1.0.0",
   "description": "Typescript (and JavaScript) on-screen controllers using DOM apis",
+  "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "unpkg": "dist/umd/index.js",
-  "files": [
-    "dist"
-  ],
+  "jsdelivr": "dist/index.min.js",
   "scripts": {
-    "build": "rimraf dist && npm run build:js && npm run build:types",
-    "build:js": "node esbuild.config.js",
+    "clean": "rimraf dist",
+    "build:js": "rollup -c",
     "build:types": "tsc --emitDeclarationOnly",
+    "build": "npm run clean && npm run build:js && npm run build:types",
     "prepublishOnly": "npm run build",
     "version": "standard-version",
     "version:minor": "standard-version --release-as minor",
     "version:major": "standard-version --release-as major",
-    "release": "pnpm run build && git push --follow-tags origin master && pnpm publish --access public"
+    "release": "npm run build && git push --follow-tags origin master && npm publish --access public",
+    "serve": "npx serve ."
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
-    "esbuild": "^0.19.12",
-    "esbuild-node-externals": "^1.15.0",
-    "typescript": "^5.7.2",
-    "standard-version": "^9.5.0"
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.28.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.7.2"
   },
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
-      "types": "./dist/types/index.d.ts"
+      "default": "./dist/index.min.js"
     },
     "./button": {
-      "import": "./dist/esm/Button.js",
-      "require": "./dist/cjs/Button.js",
-      "types": "./dist/types/Button.d.ts"
+      "types": "./dist/types/button.d.ts",
+      "import": "./dist/esm/button.js",
+      "require": "./dist/cjs/button.js",
+      "default": "./dist/button.min.js"
     },
     "./dpad": {
-      "import": "./dist/esm/Dpad.js",
-      "require": "./dist/cjs/Dpad.js",
-      "types": "./dist/types/Dpad.d.ts"
+      "types": "./dist/types/dpad.d.ts",
+      "import": "./dist/esm/dpad.js", 
+      "require": "./dist/cjs/dpad.js",
+      "default": "./dist/dpad.min.js"
     },
     "./joystick": {
-      "import": "./dist/esm/Joystick.js",
-      "require": "./dist/cjs/Joystick.js",
-      "types": "./dist/types/Joystick.d.ts"
+      "types": "./dist/types/joystick.d.ts",
+      "import": "./dist/esm/joystick.js",
+      "require": "./dist/cjs/joystick.js", 
+      "default": "./dist/joystick.min.js"
     },
     "./slider": {
-      "import": "./dist/esm/RetractableSlider.js",
-      "require": "./dist/cjs/RetractableSlider.js",
-      "types": "./dist/types/RetractableSlider.d.ts"
+      "types": "./dist/types/slider.d.ts",
+      "import": "./dist/esm/slider.js",
+      "require": "./dist/cjs/slider.js",
+      "default": "./dist/slider.min.js"
     }
   },
+  "sideEffects": false,
   "author": "CypherpunkSamurai",
   "license": "MIT",
   "repository": {
