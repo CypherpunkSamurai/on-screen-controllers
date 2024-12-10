@@ -1,6 +1,6 @@
 {
   "name": "on-screen-controllers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Typescript (and JavaScript) on-screen controllers using DOM apis",
   "type": "module",
   "main": "dist/cjs/index.js",
