@@ -6,7 +6,7 @@
 
 /**
  * Represents the direction of the retractable slider.
- * 
+ *
  * @typedef {("vertical" | "horizontal")} direction
  * @property {"vertical"} vertical - Indicates the slider moves vertically.
  * @property {"horizontal"} horizontal - Indicates the slider moves horizontally.
@@ -15,7 +15,7 @@ type direction = "vertical" | "horizontal";
 
 /**
  * Options for configuring the RetractableSlider Controller.
- * 
+ *
  * @interface RetrackableSliderOptions
  * @property {string} [uid] - Unique identifier for the slider
  * @property {HTMLElement | null} [container] - Container element for the slider. Defaults to document.body
@@ -80,11 +80,11 @@ export interface RetrackableSliderOptions {
 
 /**
  * A customizable slider component that retracts to its initial position when released.
- * 
+ *
  * @remarks
  * The RetractableSlider provides a UI component that can be used for temporary input,
  * like joystick controls or temporary value adjustments.
- * 
+ *
  * @example
  * ```typescript
  * const slider = new RetrackableSlider({
@@ -93,7 +93,7 @@ export interface RetrackableSliderOptions {
  *   onSlideCallback: (value) => console.log(value)
  * });
  * ```
- * 
+ *
  * @property {string} [uid] - Unique identifier for the slider
  * @property {HTMLElement} [container=document.body] - Container element for the slider
  * @property {string} [top='50%'] - Top position of the slider
@@ -217,7 +217,7 @@ export class RetrackableSlider {
 	 * const slider = new RetractableSlider();
 	 * slider.log("Slider initialized"); // [RetrackableSlider:123] Slider initialized
 	 * ```
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	log(message: string) {
@@ -229,7 +229,7 @@ export class RetrackableSlider {
 	/**
 	 * Initializes the retractableslider controller.
 	 * This method is called automatically when the retractableslider is constructed.
-	 * 
+	 *
 	 * @throws {Error} Throws an error if the container element is not found.
 	 * @returns {void}
 	 */
@@ -302,7 +302,7 @@ export class RetrackableSlider {
 
 	/**
 	 * Updates the slider ui.
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	updateUI(): void {
@@ -323,7 +323,7 @@ export class RetrackableSlider {
 	 * Update Container Rectangle
 	 *
 	 * Updaate the base rectangle bounds for the slider to calculate the position of the cursor.
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	updateContainerRectangle(): void {
@@ -334,7 +334,7 @@ export class RetrackableSlider {
 
 	/**
 	 * Handles the Slider Up event.
-	 * 
+	 *
 	 * This event is triggered when the slider is released.
 	 * @returns {void}
 	 */
@@ -361,7 +361,7 @@ export class RetrackableSlider {
 
 	/**
 	 * Handles the Slider Down event.
-	 * 
+	 *
 	 * This event is triggered when the slider is pressed.
 	 * @returns {void}
 	 */
@@ -382,7 +382,7 @@ export class RetrackableSlider {
 
 	/**
 	 * Handles the Slider Move event.
-	 * 
+	 *
 	 * This event is triggered when the slider is moved.
 	 * @returns {void}
 	 */
@@ -399,7 +399,7 @@ export class RetrackableSlider {
 
 	/**
 	 * Set Value of the Slider
-	 * 
+	 *
 	 * Set the value of the slider based on the pointer event.
 	 * @param e - Pointer Event
 	 * @returns {void}

@@ -4,13 +4,12 @@
  * D-pad is a ui element for a on-screen directional pad that returns a directional value when pressed.
  */
 
-
 /**
  * SVG path data for a D-pad (directional pad) control.
  * Each property contains path data that draws a directional arrow.
- * 
+ *
  * @interface DpadPathData
- * @property {string} up - SVG path data for upward arrow 
+ * @property {string} up - SVG path data for upward arrow
  * @property {string} right - SVG path data for rightward arrow
  * @property {string} down - SVG path data for downward arrow
  * @property {string} left - SVG path data for leftward arrow
@@ -37,10 +36,9 @@ type direction =
 	| "up-left"
 	| "down-left";
 
-
 /**
  * Configuration options for the D-pad controller
- * 
+ *
  * @interface DpadOptions
  * @property {string} [uid] - Unique identifier for the D-pad instance
  * @property {HTMLElement | null} [container=document.body] - DOM element to contain the D-pad
@@ -55,7 +53,7 @@ type direction =
  * @property {boolean} [verboseLogging=false] - Enable detailed logging for debugging
  * @property {boolean} [keyRepeat=false] - Enable repeated key press events
  * @property {number} [rotation=0] - Rotation angle in degrees for landscape orientation
- * 
+ *
  * @example
  * ```typescript
  * const options: DpadOptions = {
@@ -85,7 +83,7 @@ interface DpadOptions {
 	centerRadiusThreshold?: number;
 	/** onPressCallback is called when the D-pad is pressed.
 	 * directions can be {direction} {"center", "up", "right", "down", "left", "up-right", "down-right", "down-left", "up-left" }
-	*/
+	 */
 	onPressCallback?: (direction: direction | string) => void;
 	/** onReleaseCallback is called when the D-pad is released.
 	 * directions can be only {"center"}
@@ -101,7 +99,7 @@ interface DpadOptions {
 
 /**
  * DpadController - A class that creates and manages a D-pad (directional pad) controller interface.
- * 
+ *
  * @example
  * ```typescript
  * const dpad = new DpadController({
@@ -113,7 +111,7 @@ interface DpadOptions {
  *   rotation: 45 // 45 degree rotation
  * });
  * ```
- * 
+ *
  * @property {string} uid - Unique identifier for the D-pad controller
  * @property {HTMLElement} container - DOM element that will contain the D-pad
  * @property {string} top - CSS top position of the D-pad
@@ -236,7 +234,7 @@ export class DpadController {
 	/**
 	 * Initializes the D-pad component by setting up the base element and event listeners.
 	 * This method should be called after the component is constructed.
-	 * 
+	 *
 	 * @throws {Error} When D-pad container is not found
 	 * @throws {Error} When D-pad elements could not be created
 	 * @returns {void}
@@ -280,7 +278,7 @@ export class DpadController {
 
 	/**
 	 * Render the d-pad element
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	render(): void {
@@ -329,7 +327,7 @@ export class DpadController {
 	 * This method is called ot recalculate the container element size
 	 * it updates the containerRect property which is used to determine the manimum
 	 * distance the d-pad handle can move from the center of the d-pad
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	updateContainerRectangle(): void {
@@ -404,7 +402,8 @@ export class DpadController {
 		// Handle Pointer Events
 		// Get pointer ID from either touch or pointer event
 		const pointerEvent = e instanceof PointerEvent ? e : e.touches[0];
-		const pointerId = e instanceof PointerEvent ? e.pointerId : e.touches[0].identifier;
+		const pointerId =
+			e instanceof PointerEvent ? e.pointerId : e.touches[0].identifier;
 
 		// Set pointer capture if available
 		if (e instanceof PointerEvent) {

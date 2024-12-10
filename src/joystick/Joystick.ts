@@ -68,7 +68,7 @@ interface JoystickControllerOptions {
 
 /**
  * A Virtual Joystick Controller.
- * 
+ *
  * @example
  * ```typescript
  * // Create a new joystick
@@ -82,7 +82,7 @@ interface JoystickControllerOptions {
  *   }
  * });
  * ```
- * 
+ *
  * @property {string} uid - Unique identifier for the joystick
  * @property {string} top - CSS top position of the joystick
  * @property {string} left - CSS left position of the joystick
@@ -196,7 +196,7 @@ export class JoystickController {
 	/**
 	 * Initializes the joystick controller.
 	 * This method is called automatically when the joystick is constructed.
-	 * 
+	 *
 	 * @throws {Error} If the button container is not found.
 	 * @returns {void}
 	 */
@@ -226,7 +226,7 @@ export class JoystickController {
 
 	/**
 	 * Render the joystick element
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	render() {
@@ -266,7 +266,7 @@ export class JoystickController {
 	 * Update Container Rectangle
 	 *
 	 * Update Container Rectangle for properly calculating the joystick position
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	updateContainerRectangle() {

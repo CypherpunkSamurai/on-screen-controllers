@@ -4,11 +4,10 @@
  * Button is a ui element for a on-screen button that returns a boolean value when pressed.
  */
 
-
 /**
  * Configuration options for creating a Button instance.
  * @interface ButtonOptions
- * 
+ *
  * @example
  * ```typescript
  * const buttonOptions: ButtonOptions = {
@@ -20,7 +19,7 @@
  *   onPressCallback: () => console.log('Button pressed')
  * };
  * ```
- * 
+ *
  * @property {string} [uid] - Unique identifier for the button
  * @property {HTMLElement | null} [container] - Parent container element to append the button to
  * @property {string} [top] - CSS top position value
@@ -35,9 +34,9 @@
  * @property {boolean} [verboseLogging] - Enable detailed console logging
  * @property {() => void} [onPressCallback] - Function to execute when button is pressed
  * @property {() => void} [onReleaseCallback] - Function to execute when button is released
- * 
+ *
  * @returns {ButtonOptions} Configuration object for button initialization
- * 
+ *
  * @since 1.0.0
  */
 export interface ButtonOptions {
@@ -73,7 +72,7 @@ export interface ButtonOptions {
 
 /**
  * A controller class for creating and managing interactive buttons in the DOM.
- * 
+ *
  * @example
  * ```typescript
  * const button = new ButtonController({
@@ -93,7 +92,7 @@ export interface ButtonOptions {
  *   onReleaseCallback: () => console.log('Button released')
  * });
  * ```
- * 
+ *
  * @interface ButtonOptions
  * @property {string} [uid] - Unique identifier for the button. Defaults to random string.
  * @property {HTMLElement} [container] - Container element for the button. Defaults to document.body.
@@ -109,15 +108,15 @@ export interface ButtonOptions {
  * @property {boolean} [verboseLogging=false] - Enable detailed console logging.
  * @property {() => void} [onPressCallback] - Callback function for button press event.
  * @property {() => void} [onReleaseCallback] - Callback function for button release event.
- * 
+ *
  * @throws {Error} Throws an error if the container element is not found.
- * 
+ *
  * @remarks
  * The ButtonController creates a customizable, interactive button element that can be positioned
  * anywhere in the DOM. It handles touch and pointer events, supports SVG icons, and provides
  * press/release callbacks. The button appearance can be extensively customized through the
  * options parameter.
- * 
+ *
  * @public
  */
 export class ButtonController {
@@ -211,7 +210,7 @@ export class ButtonController {
 
 	/**
 	 * Initializes the button controller by setting up necessary event handlers and rendering the button.
-	 * 
+	 *
 	 * @throws {Error} When button container is not found
 	 * @returns {void}
 	 */
@@ -249,7 +248,7 @@ export class ButtonController {
 
 	/**
 	 * Renders the button element with specified styles and SVG icon if provided
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	render(): void {
@@ -280,14 +279,14 @@ export class ButtonController {
 		// if there is a svg icon render it
 		if (this.svg) {
 			this.base.appendChild(this.svg);
-			this.svg.style.width = 'fit-content';
-			this.svg.style.height = 'fit-content';
-			this.svg.style.position = 'absolute';
-			this.svg.style.top = '50%';
-			this.svg.style.left = '50%';
-			this.svg.style.transform = 'translate(-50%, -50%)';
-			this.svg.style.zIndex = '1000';
-			this.svg.style.color = '#FFFFFF';
+			this.svg.style.width = "fit-content";
+			this.svg.style.height = "fit-content";
+			this.svg.style.position = "absolute";
+			this.svg.style.top = "50%";
+			this.svg.style.left = "50%";
+			this.svg.style.transform = "translate(-50%, -50%)";
+			this.svg.style.zIndex = "1000";
+			this.svg.style.color = "#FFFFFF";
 		}
 
 		// add to container
@@ -298,7 +297,7 @@ export class ButtonController {
 
 	/**
 	 * Handles the button release event.
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	onButtonUp(): void {
@@ -316,7 +315,7 @@ export class ButtonController {
 	/**
 	 * Handles button down event.
 	 * Sets button state to pressed and triggers callback if defined.
-	 * 
+	 *
 	 * @returns {void}
 	 */
 	onButtonDown(): void {
