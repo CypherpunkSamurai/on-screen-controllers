@@ -3,11 +3,11 @@
   "version": "1.0.2",
   "description": "Typescript (and JavaScript) on-screen controllers using DOM apis",
   "type": "module",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
-  "unpkg": "dist/umd/index.js",
-  "jsdelivr": "dist/index.min.js",
+  "main": "dist/cjs/OnScreenControllers.js",
+  "module": "dist/esm/OnScreenControllers.js",
+  "types": "dist/types/OnScreenControllers.d.ts",
+  "unpkg": "dist/umd/OnScreenControllers.js",
+  "jsdelivr": "dist/OnScreenControllers.min.js",
   "scripts": {
     "clean": "rimraf dist",
     "build:js": "rollup -c",
@@ -39,34 +39,30 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "default": "./dist/index.min.js"
+      "types": "./dist/types/OnScreenControllers.d.ts",
+      "import": "./dist/esm/OnScreenControllers.js",
+      "require": "./dist/cjs/OnScreenControllers.js",
+      "default": "./dist/umd/OnScreenControllers.js"
     },
     "./button": {
       "types": "./dist/types/button.d.ts",
       "import": "./dist/esm/button.js",
-      "require": "./dist/cjs/button.js",
-      "default": "./dist/button.min.js"
+      "require": "./dist/cjs/button.js"
     },
     "./dpad": {
       "types": "./dist/types/dpad.d.ts",
       "import": "./dist/esm/dpad.js",
-      "require": "./dist/cjs/dpad.js",
-      "default": "./dist/dpad.min.js"
+      "require": "./dist/cjs/dpad.js"
     },
     "./joystick": {
       "types": "./dist/types/joystick.d.ts",
       "import": "./dist/esm/joystick.js",
-      "require": "./dist/cjs/joystick.js",
-      "default": "./dist/joystick.min.js"
+      "require": "./dist/cjs/joystick.js"
     },
     "./slider": {
       "types": "./dist/types/slider.d.ts",
       "import": "./dist/esm/slider.js",
-      "require": "./dist/cjs/slider.js",
-      "default": "./dist/slider.min.js"
+      "require": "./dist/cjs/slider.js"
     }
   },
   "sideEffects": false,
