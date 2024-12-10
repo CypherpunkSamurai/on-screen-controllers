@@ -14,8 +14,8 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build": "npm run clean && npm run build:js && npm run build:types",
     "prepublishOnly": "npm run build",
-    "version": "standard-version",
-    "version:minor": "standard-version --release-as minor",
+    "version:patch": "standard-version --release-as patch",
+    "version:minor": "standard-version --release-as minor", 
     "version:major": "standard-version --release-as major",
     "release": "npm run build && git push --follow-tags origin master && npm publish --access public",
     "serve": "npx serve ."
