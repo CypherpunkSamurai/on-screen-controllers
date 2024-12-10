@@ -402,26 +402,22 @@ export class DpadController {
 	onDpadDown(e: PointerEvent | TouchEvent): void {
 		this.log("D-pad pointer down...");
 		// Handle Pointer Events
+		// Get pointer ID from either touch or pointer event
+		const pointerEvent = e instanceof PointerEvent ? e : e.touches[0];
+		const pointerId = e instanceof PointerEvent ? e.pointerId : e.touches[0].identifier;
+
+		// Set pointer capture if available
 		if (e instanceof PointerEvent) {
-			this.base.setPointerCapture(e.pointerId);
-			this.isPressed = true;
-			this.pointerId = e.pointerId;
-			// update container rect for accurate calculation
-			this.updateContainerRectangle();
-			// change opacity of whole base when touched
-			// this.base.style.opacity = "1";
-			// handle pointer move
-			this.onDpadMove(e);
-		} else if (e instanceof TouchEvent && e.touches.length > 0) {
-			// monkey patch for touch events (mobile devices)
-			// Handle Touch Events
-			this.isPressed = true;
-			this.pointerId = e.touches[0].identifier;
-			// update container rect for accurate calculation
-			this.updateContainerRectangle();
-			// forward to pointer move
-			this.onDpadMove(e.touches[0] as unknown as PointerEvent);
+			this.base.setPointerCapture(pointerId);
 		}
+
+		// Update state
+		this.isPressed = true;
+		this.pointerId = pointerId;
+		this.updateContainerRectangle();
+
+		// Handle movement
+		this.onDpadMove(pointerEvent as PointerEvent);
 	}
 
 	/**
