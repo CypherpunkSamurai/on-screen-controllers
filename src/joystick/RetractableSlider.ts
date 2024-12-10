@@ -4,42 +4,110 @@
  * A slider is a slider that retracts back to 0 when released.
  */
 
+/**
+ * Represents the direction of the retractable slider.
+ * 
+ * @typedef {("vertical" | "horizontal")} direction
+ * @property {"vertical"} vertical - Indicates the slider moves vertically.
+ * @property {"horizontal"} horizontal - Indicates the slider moves horizontally.
+ */
 type direction = "vertical" | "horizontal";
 
-// Options for RetractableSlider
+/**
+ * Options for configuring the RetractableSlider Controller.
+ * 
+ * @interface RetrackableSliderOptions
+ * @property {string} [uid] - Unique identifier for the slider
+ * @property {HTMLElement | null} [container] - Container element for the slider. Defaults to document.body
+ * @property {string} [top="50%"] - Top position of the slider
+ * @property {string} [left="50%"] - Left position of the slider
+ * @property {string} [width="100px"] - Width of the slider
+ * @property {string} [height="500px"] - Height of the slider
+ * @property {string} [color] - Color of the slider
+ * @property {string} [borderColor="gray"] - Border color of the slider
+ * @property {string} [borderWidth="2px"] - Border width of the slider
+ * @property {string} [borderRadius="2px"] - Border radius of the slider
+ * @property {direction} [direction="vertical"] - Direction of slider movement ("vertical" | "horizontal")
+ * @property {function} [onSlideCallback] - Callback function triggered during sliding, receives current value
+ * @property {function} [onReleaseCallback] - Callback function triggered when slider is released
+ * @property {boolean} [verboseLogging=false] - Enable verbose logging for debugging
+ *
+ * @example
+ * ```typescript
+ * const options: RetrackableSliderOptions = {
+ *   uid: "slider1",
+ *   container: document.getElementById("container"),
+ *   top: "100px",
+ *   left: "200px",
+ *   width: "150px",
+ *   height: "400px",
+ *   color: "#FF0000",
+ *   direction: "vertical"
+ * };
+ * ```
+ */
 export interface RetrackableSliderOptions {
-	// unique id for the slider
+	/** unique id for the slider */
 	uid?: string;
-	// container element of the slider (default: body)
+	/** container element of the slider (default: body) */
 	container?: HTMLElement | null;
-	// top position of the slider (default: 50%)
+	/** top position of the slider (default: 50%) */
 	top?: string;
-	// left position of the slider (default: 50%)
+	/** left position of the slider (default: 50%) */
 	left?: string;
-	// width: width of the slider (default: 100px)
+	/** width: width of the slider (default: 100px) */
 	width?: string;
-	// height: height of the slider (default: 500px)
+	/** height: height of the slider (default: 500px) */
 	height?: string;
-	// color of the slider
+	/** color of the slider */
 	color?: string;
-	// border color of the slider (default: gray)
+	/** border color of the slider (default: gray) */
 	borderColor?: string;
-	// border width of the slider (default: 2px)
+	/** border width of the slider (default: 2px) */
 	borderWidth?: string;
 	// border radius (default: 2px)
 	borderRadius?: string;
-	// direction of the slider to rotate (default: vertical)
+	/** direction of the slider to rotate (default: vertical) */
 	// can be either vertical or horizontal
 	direction?: direction;
-	// callbacks
+	/** onSlideCallback is called when the slider cursor is moved */
 	onSlideCallback?: (value: number) => void;
+	/** onReleaseCallback is called when the slider is released */
 	onReleaseCallback?: () => void;
-	// verbose logging (default: false)
+	/** verbose logging (default: false) */
 	verboseLogging?: boolean;
 }
 
 /**
- * RetractableSlider Controller 🎮 - A class for on-screen retractable slider.
+ * A customizable slider component that retracts to its initial position when released.
+ * 
+ * @remarks
+ * The RetractableSlider provides a UI component that can be used for temporary input,
+ * like joystick controls or temporary value adjustments.
+ * 
+ * @example
+ * ```typescript
+ * const slider = new RetrackableSlider({
+ *   container: document.getElementById('container'),
+ *   direction: 'vertical',
+ *   onSlideCallback: (value) => console.log(value)
+ * });
+ * ```
+ * 
+ * @property {string} [uid] - Unique identifier for the slider
+ * @property {HTMLElement} [container=document.body] - Container element for the slider
+ * @property {string} [top='50%'] - Top position of the slider
+ * @property {string} [left='50%'] - Left position of the slider
+ * @property {string} [width='1rem'] - Width of the slider
+ * @property {string} [height='5rem'] - Height of the slider
+ * @property {string} [color='gray'] - Background color of the slider
+ * @property {string} [borderColor='gray'] - Border color of the slider
+ * @property {string} [borderWidth='2px'] - Border width of the slider
+ * @property {string} [borderRadius='2px'] - Border radius of the slider
+ * @property {('vertical'|'horizontal')} [direction='vertical'] - Direction of slider movement
+ * @property {(value: number) => void} [onSlideCallback] - Callback function when sliding
+ * @property {() => void} [onReleaseCallback] - Callback function when released
+ * @property {boolean} [verboseLogging=false] - Enable verbose console logging
  */
 export class RetrackableSlider {
 	// uid - unique id of the slider
@@ -82,7 +150,10 @@ export class RetrackableSlider {
 	// slider value
 	valuePercent: number;
 
-	// constructor
+	/**
+	 * Create a new RetractableSlider Controller.
+	 * @param options - Options for configuring the RetractableSlider
+	 */
 	constructor(options: RetrackableSliderOptions) {
 		// set uid or generate a new one
 		this.uid = options.uid || Math.random().toString(36).substring(7);
@@ -138,7 +209,16 @@ export class RetrackableSlider {
 	}
 
 	/**
-	 * Logging Function
+	 * Logs a message to the console if verbose logging is enabled.
+	 * This message is prefixed with the controller's unique identifier.
+	 * @param message - The message to be logged
+	 * @example
+	 * ```typescript
+	 * const slider = new RetractableSlider();
+	 * slider.log("Slider initialized"); // [RetrackableSlider:123] Slider initialized
+	 * ```
+	 * 
+	 * @returns {void}
 	 */
 	log(message: string) {
 		if (this.verboseLogging) {
@@ -147,11 +227,20 @@ export class RetrackableSlider {
 	}
 
 	/**
-	 * Init
+	 * Initializes the retractableslider controller.
+	 * This method is called automatically when the retractableslider is constructed.
+	 * 
+	 * @throws {Error} Throws an error if the container element is not found.
+	 * @returns {void}
 	 */
-	init() {
+	init(): void {
 		// log
 		this.log("Initializing RetrackableSlider...");
+
+		// Check Container Exists
+		if (!this.container) {
+			throw new Error("Button Container not found!");
+		}
 
 		// Render Styles for the Slider
 		this.base.style.position = "absolute";
@@ -212,9 +301,11 @@ export class RetrackableSlider {
 	}
 
 	/**
-	 * Update UI
+	 * Updates the slider ui.
+	 * 
+	 * @returns {void}
 	 */
-	updateUI() {
+	updateUI(): void {
 		// log
 		this.log("Updating UI...");
 
@@ -232,17 +323,22 @@ export class RetrackableSlider {
 	 * Update Container Rectangle
 	 *
 	 * Updaate the base rectangle bounds for the slider to calculate the position of the cursor.
+	 * 
+	 * @returns {void}
 	 */
-	updateContainerRectangle() {
+	updateContainerRectangle(): void {
 		this.baseRect = this.base.getBoundingClientRect();
 	}
 
 	// ***<< EVENT HANDLERS >>***
 
 	/**
-	 * Handle Slider Down
+	 * Handles the Slider Up event.
+	 * 
+	 * This event is triggered when the slider is released.
+	 * @returns {void}
 	 */
-	onSliderUp(e: PointerEvent) {
+	onSliderUp(e: PointerEvent): void {
 		// log
 		this.log("Slider Up");
 
@@ -264,7 +360,10 @@ export class RetrackableSlider {
 	}
 
 	/**
-	 * Handle Slider Down
+	 * Handles the Slider Down event.
+	 * 
+	 * This event is triggered when the slider is pressed.
+	 * @returns {void}
 	 */
 	onSliderDown(e: PointerEvent): void {
 		// log
@@ -282,9 +381,12 @@ export class RetrackableSlider {
 	}
 
 	/**
-	 * Handle Slider Move
+	 * Handles the Slider Move event.
+	 * 
+	 * This event is triggered when the slider is moved.
+	 * @returns {void}
 	 */
-	onSliderMove(e: PointerEvent) {
+	onSliderMove(e: PointerEvent): void {
 		// prevent default
 		e.preventDefault();
 
@@ -296,7 +398,11 @@ export class RetrackableSlider {
 	}
 
 	/**
-	 * Set Value
+	 * Set Value of the Slider
+	 * 
+	 * Set the value of the slider based on the pointer event.
+	 * @param e - Pointer Event
+	 * @returns {void}
 	 */
 	setSliderValue(e: PointerEvent): void {
 		// update container rectangle

@@ -1,10 +1,20 @@
 /**
- * D-pad Controller 🎮 - A class for on-screen button
+ * D-pad Controller 🎮 - A class for on-screen Directional Pad
  *
  * D-pad is a ui element for a on-screen directional pad that returns a directional value when pressed.
  */
 
-// Paths for D-Pad
+
+/**
+ * SVG path data for a D-pad (directional pad) control.
+ * Each property contains path data that draws a directional arrow.
+ * 
+ * @interface DpadPathData
+ * @property {string} up - SVG path data for upward arrow 
+ * @property {string} right - SVG path data for rightward arrow
+ * @property {string} down - SVG path data for downward arrow
+ * @property {string} left - SVG path data for leftward arrow
+ */
 const pathData = {
 	up: "M264,30.79a19.8,19.8,0,0,0-28,0L172.64,94.17A173.44,173.44,0,0,1,232,76.58L236.58,72a19.8,19.8,0,0,1,28,0L269,76.46A173,173,0,0,1,325.21,92Z",
 	right:
@@ -13,7 +23,9 @@ const pathData = {
 	left: "M72,264.56a19.8,19.8,0,0,1,0-28l5.75-5.75A173.15,173.15,0,0,1,95.3,171.51L30.79,236a19.8,19.8,0,0,0,0,28l64.51,64.5a173.08,173.08,0,0,1-17.44-58Z",
 };
 
-// Direction type
+/**
+ * Represents the possible directions for a digital pad (D-pad) input.
+ */
 type direction =
 	| "center"
 	| "up"
@@ -25,37 +37,103 @@ type direction =
 	| "up-left"
 	| "down-left";
 
-// Options for the D-pad Controller
+
+/**
+ * Configuration options for the D-pad controller
+ * 
+ * @interface DpadOptions
+ * @property {string} [uid] - Unique identifier for the D-pad instance
+ * @property {HTMLElement | null} [container=document.body] - DOM element to contain the D-pad
+ * @property {string} [top="50%"] - Vertical position of the D-pad
+ * @property {string} [left="50%"] - Horizontal position of the D-pad
+ * @property {number} [radius=2] - Radius of the D-pad in rem units
+ * @property {string} [colorBase="#262626"] - Base color of the D-pad handle
+ * @property {string} [colorsPressed="#060606"] - Color of the D-pad handle when pressed
+ * @property {number} [centerRadiusThreshold=0.25] - Threshold radius for center position detection
+ * @property {(direction: direction | string) => void} [onPressCallback] - Callback fired when D-pad is pressed
+ * @property {(direction: direction | string) => void} [onReleaseCallback] - Callback fired when D-pad is released
+ * @property {boolean} [verboseLogging=false] - Enable detailed logging for debugging
+ * @property {boolean} [keyRepeat=false] - Enable repeated key press events
+ * @property {number} [rotation=0] - Rotation angle in degrees for landscape orientation
+ * 
+ * @example
+ * ```typescript
+ * const options: DpadOptions = {
+ *   container: document.getElementById('dpad-container'),
+ *   radius: 50,
+ *   colorBase: '#333333',
+ *   onPressCallback: (direction) => console.log(`Pressed ${direction}`)
+ * }
+ * ```
+ */
 interface DpadOptions {
+	/** unique identifier for the D-pad controller (Optional, default: random string) */
 	uid?: string;
-	// container for the D-pad controller (Optional, default: document.body)
+	/** container for the D-pad controller (Optional, default: document.body) */
 	container?: HTMLElement | null;
-	// top position of the D-pad controller (Optional, default: "50%")
+	/** top position of the D-pad controller (Optional, default: "50%") */
 	top?: string;
-	// left position of the D-pad controller (Optional, default: "50%")
+	/** left position of the D-pad controller (Optional, default: "50%") */
 	left?: string;
-	// radius of the D-pad controller (Optional, default: 2rem)
+	/** radius of the D-pad controller (Optional, default: 2rem) */
 	radius?: number;
-	// handle colors (Optional, default: "#262626")
+	/** handle colors (Optional, default: "#262626") */
 	colorBase?: string;
-	// pressed handle colors (Optional, default: "#060606")
+	/** pressed handle colors (Optional, default: "#060606") */
 	colorsPressed?: string;
-	// center radius threshold (Optional, default: 0.25)
+	/** center radius threshold (Optional, default: 0.25) */
 	centerRadiusThreshold?: number;
-	// callbacks for the D-pad controller
-	// directions can be "center", "up", "right", "down", "left", "up-right", "down-right", "down-left", "up-left"
+	/** onPressCallback is called when the D-pad is pressed.
+	 * directions can be {direction} {"center", "up", "right", "down", "left", "up-right", "down-right", "down-left", "up-left" }
+	*/
 	onPressCallback?: (direction: direction | string) => void;
+	/** onReleaseCallback is called when the D-pad is released.
+	 * directions can be only {"center"}
+	 */
 	onReleaseCallback?: (direction: direction | string) => void;
-	// verbose logging (Optional, default: false)
+	/** verbose logging (Optional, default: false) */
 	verboseLogging?: boolean;
-	// key repeat (repeat key press) (Optional, default: false)
+	/** key repeat (repeat key press) (Optional, default: false) */
 	keyRepeat?: boolean;
-	// rotation degree (for rotated D-pad on landscape mode) (Optional, default: 0)
+	/** rotation degree (for rotated D-pad on landscape mode) (Optional, default: 0) */
 	rotation?: number;
 }
 
 /**
- * D-pad Controller
+ * DpadController - A class that creates and manages a D-pad (directional pad) controller interface.
+ * 
+ * @example
+ * ```typescript
+ * const dpad = new DpadController({
+ *   container: document.getElementById('container'),
+ *   radius: 100,
+ *   colorBase: '#333',
+ *   colorPressed: '#666',
+ *   onPressCallback: (direction) => console.log(`Pressed ${direction}`),
+ *   rotation: 45 // 45 degree rotation
+ * });
+ * ```
+ * 
+ * @property {string} uid - Unique identifier for the D-pad controller
+ * @property {HTMLElement} container - DOM element that will contain the D-pad
+ * @property {string} top - CSS top position of the D-pad
+ * @property {string} left - CSS left position of the D-pad
+ * @property {number} radius - Size of the D-pad in pixels
+ * @property {string} colorBase - Color of the D-pad when not pressed
+ * @property {string} colorPressed - Color of the D-pad when pressed
+ * @property {number} centerThreshold - Threshold radius for registering input (0-1)
+ * @property {(direction: direction) => void} onPressCallback - Callback function when direction is pressed
+ * @property {(direction: direction) => void} onReleaseCallback - Callback function when direction is released
+ * @property {boolean} verboseLogging - Enable detailed console logging
+ * @property {SVGElement} base - The main SVG element of the D-pad
+ * @property {direction} currentDirection - Current active direction
+ * @property {Object.<string, SVGPathElement>} basePaths - SVG path elements for each direction
+ * @property {number} pointerId - Current active pointer ID
+ * @property {DOMRect} baseRect - Bounding rectangle of the D-pad
+ * @property {number} inputRegisterDistance - Distance threshold for input registration
+ * @property {boolean} isPressed - Whether the D-pad is currently pressed
+ * @property {boolean} keyRepeat - Whether to allow continuous key press events
+ * @property {number} rotation - Rotation angle of the D-pad in degrees
  */
 export class DpadController {
 	// Unique id for the D-pad controller
@@ -68,16 +146,17 @@ export class DpadController {
 	left: string;
 	// width of the D-pad controller
 	radius: number;
-	// handle colors
+	// base color of the D-pad handles
 	colorBase: string;
-	// pressed handle colors
+	// pressed color of the D-pad handles
 	colorPressed: string;
 	// center radius threshold out of this bound it counts as input
 	centerThreshold?: number;
-	// callbacks
+	// callback triggered when a direction is pressed
 	onPressCallback: (direction: direction) => void;
+	// callback triggered when a direction is released
 	onReleaseCallback: (direction: direction) => void;
-	// verbose
+	// verbose logging for debugging
 	verboseLogging: boolean;
 	// variables
 	base: SVGElement;
@@ -91,7 +170,10 @@ export class DpadController {
 	// rotation degree
 	rotation: number;
 
-	// init the d-pad
+	/**
+	 * Create a new D-pad controller
+	 * @param {DpadOptions} options - D-pad controller options
+	 */
 	constructor(options: DpadOptions) {
 		this.uid = options.uid || Math.random().toString(36).substring(7);
 		this.container = options.container || document.body;
@@ -138,23 +220,34 @@ export class DpadController {
 	}
 
 	/**
-	 * Log
+	 * Logs a message to the console if verbose logging is enabled.
+	 * @param message - The message to log
+	 * @example
+	 * ```ts
+	 * dpad.log("D-Pad Button pressed"); // Logs: [DpadController:123] D-Pad Button pressed
+	 * ```
+	 * @returns {void}
 	 */
-	log(message: string) {
+	log(message: string): void {
 		if (this.verboseLogging)
 			console.log(`[DpadController:${this.uid}] ${message}`);
 	}
 
 	/**
-	 * Init the D-pad
+	 * Initializes the D-pad component by setting up the base element and event listeners.
+	 * This method should be called after the component is constructed.
+	 * 
+	 * @throws {Error} When D-pad container is not found
+	 * @throws {Error} When D-pad elements could not be created
+	 * @returns {void}
 	 */
-	init() {
+	init(): void {
 		// init
 		this.log("Init");
 
 		// pre init checks
 		if (!this.container) {
-			throw new Error("Button Container not found!");
+			throw new Error("D-Pad Container not found!");
 		}
 		// check base
 		if (!this.base) {
@@ -186,9 +279,11 @@ export class DpadController {
 	}
 
 	/**
-	 * Render UI
+	 * Render the d-pad element
+	 * 
+	 * @returns {void}
 	 */
-	render() {
+	render(): void {
 		// Check if base already exist
 		if (!this.base) {
 			throw new Error(
@@ -229,13 +324,15 @@ export class DpadController {
 	}
 
 	/**
-	 * Update Contaier Rect
+	 * Update Contaier Rectangle
 	 *
 	 * This method is called ot recalculate the container element size
 	 * it updates the containerRect property which is used to determine the manimum
 	 * distance the d-pad handle can move from the center of the d-pad
+	 * 
+	 * @returns {void}
 	 */
-	updateContainerRectangle() {
+	updateContainerRectangle(): void {
 		this.baseRect = this.base.getBoundingClientRect();
 		// Calculate the radius of the d-pad
 		// Half of the minimum dimension (width or height) of the container
@@ -250,8 +347,9 @@ export class DpadController {
 	 * Update D-Pad UI After Pointer Events
 	 *
 	 * Change the pointer colors according to the direction
+	 * @returns {void}
 	 */
-	updateDpadUI() {
+	updateDpadUI(): void {
 		// for each base path
 		Object.entries(this.basePaths).forEach(([direction, path]) => {
 			if (this.currentDirection.includes(direction)) {
@@ -266,8 +364,9 @@ export class DpadController {
 	 * Reset D-Pad After Pointer Events
 	 *
 	 * Resets the D-pad colors
+	 * @returns {void}
 	 */
-	resetDpad() {
+	resetDpad(): void {
 		this.log("D-pad reset...");
 		// reset the colors
 		Object.values(this.basePaths).forEach((path) => {
@@ -277,11 +376,12 @@ export class DpadController {
 	}
 
 	/**
-	 * Pointer Up Event Handler
+	 * Handles the Pointer Up Event
 	 *
-	 * Triggers when pointer is Up
+	 * Triggers when pointer is released
+	 * @returns {void}
 	 */
-	onDpadUp(_: PointerEvent | TouchEvent) {
+	onDpadUp(_: PointerEvent | TouchEvent): void {
 		this.log("Pointer Up!");
 		// reset for pointer event
 		this.isPressed = false;
@@ -294,11 +394,12 @@ export class DpadController {
 	}
 
 	/**
-	 * Handle Pointer Down
+	 * Handles the Pointer Down Event
 	 *
 	 * Triggers when pointer is down
+	 * @returns {void}
 	 */
-	onDpadDown(e: PointerEvent | TouchEvent) {
+	onDpadDown(e: PointerEvent | TouchEvent): void {
 		this.log("D-pad pointer down...");
 		// Handle Pointer Events
 		if (e instanceof PointerEvent) {
@@ -324,11 +425,12 @@ export class DpadController {
 	}
 
 	/**
-	 * Handle Pointer Move
+	 * Handles the Pointer Move Event
 	 *
 	 * Triggers when the touch / pointer moves
+	 * @returns {void}
 	 */
-	onDpadMove(e: PointerEvent) {
+	onDpadMove(e: PointerEvent): void {
 		if (!this.isPressed) return;
 
 		// * Joystick Logic Here

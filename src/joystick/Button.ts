@@ -4,35 +4,121 @@
  * Button is a ui element for a on-screen button that returns a boolean value when pressed.
  */
 
+
 /**
- *  Options for the Button Controller
- */
-/**
- * Options for configuring a joystick button.
+ * Configuration options for creating a Button instance.
+ * @interface ButtonOptions
+ * 
+ * @example
+ * ```typescript
+ * const buttonOptions: ButtonOptions = {
+ *   uid: 'myButton',
+ *   width: '64px',
+ *   height: '64px',
+ *   color: '#ffffff',
+ *   radius: 32,
+ *   onPressCallback: () => console.log('Button pressed')
+ * };
+ * ```
+ * 
+ * @property {string} [uid] - Unique identifier for the button
+ * @property {HTMLElement | null} [container] - Parent container element to append the button to
+ * @property {string} [top] - CSS top position value
+ * @property {string} [left] - CSS left position value
+ * @property {string} width - CSS width value (required)
+ * @property {string} height - CSS height value (required)
+ * @property {string} [color] - Button fill color in CSS format
+ * @property {string} [shadow] - CSS box-shadow value
+ * @property {number} [rotation] - Rotation angle in degrees
+ * @property {number} [radius] - Border radius for rounded corners
+ * @property {string} [svg] - SVG markup string for custom button icon
+ * @property {boolean} [verboseLogging] - Enable detailed console logging
+ * @property {() => void} [onPressCallback] - Function to execute when button is pressed
+ * @property {() => void} [onReleaseCallback] - Function to execute when button is released
+ * 
+ * @returns {ButtonOptions} Configuration object for button initialization
+ * 
+ * @since 1.0.0
  */
 export interface ButtonOptions {
+	/** unique identifier for the button */
 	uid?: string;
+	/** container for the button controller (Optional, default: document.body) */
 	container?: HTMLElement | null;
+	/** top position of the button controller (Optional, default: "50%") */
 	top?: string;
+	/** left position of the button controller (Optional, default: "50%") */
 	left?: string;
+	/** width of the button controller (Required) */
 	width: string;
+	/** height of the button controller (Required) */
 	height: string;
+	/** color of the button controller (Optional, default: "gray") */
 	color?: string;
+	/** shadow of the button controller (Optional, default: "") */
 	shadow?: string;
+	/** rotation angle for the button controller (Optional, default: 0) */
 	rotation?: number;
-	// shape config
+	/** radius for rounded button corners (Optional, default: 5) */
 	radius?: number;
-	// svg icon for the button (optional)
+	/** svg icon for the button controller (Optional, default: null) */
 	svg?: string;
-	// logging
+	/** enable verbose logging (Optional, default: false) */
 	verboseLogging?: boolean;
-	// callbacks
+	/** callback function for button press event (Optional) */
 	onPressCallback?: () => void;
+	/** callback function for button release event (Optional) */
 	onReleaseCallback?: () => void;
 }
 
 /**
- * Button Controller
+ * A controller class for creating and managing interactive buttons in the DOM.
+ * 
+ * @example
+ * ```typescript
+ * const button = new ButtonController({
+ *   uid: 'my-button',
+ *   container: document.querySelector('.button-container'),
+ *   top: '20%',
+ *   left: '30%',
+ *   width: '4rem',
+ *   height: '4rem',
+ *   color: '#FF0000',
+ *   shadow: '0 0 10px rgba(0,0,0,0.5)',
+ *   rotation: 45,
+ *   radius: 10,
+ *   svg: '<svg>...</svg>',
+ *   verboseLogging: true,
+ *   onPressCallback: () => console.log('Button pressed'),
+ *   onReleaseCallback: () => console.log('Button released')
+ * });
+ * ```
+ * 
+ * @interface ButtonOptions
+ * @property {string} [uid] - Unique identifier for the button. Defaults to random string.
+ * @property {HTMLElement} [container] - Container element for the button. Defaults to document.body.
+ * @property {string} [top='50%'] - Top position of the button.
+ * @property {string} [left='50%'] - Left position of the button.
+ * @property {string} [width='1rem'] - Width of the button.
+ * @property {string} [height='1rem'] - Height of the button.
+ * @property {string} [color='gray'] - Color of the button.
+ * @property {string} [shadow=''] - CSS box-shadow property value.
+ * @property {number} [rotation=0] - Rotation angle in degrees.
+ * @property {number} [radius=5] - Border radius (0-100).
+ * @property {string} [svg] - SVG string to be used as button icon.
+ * @property {boolean} [verboseLogging=false] - Enable detailed console logging.
+ * @property {() => void} [onPressCallback] - Callback function for button press event.
+ * @property {() => void} [onReleaseCallback] - Callback function for button release event.
+ * 
+ * @throws {Error} Throws an error if the container element is not found.
+ * 
+ * @remarks
+ * The ButtonController creates a customizable, interactive button element that can be positioned
+ * anywhere in the DOM. It handles touch and pointer events, supports SVG icons, and provides
+ * press/release callbacks. The button appearance can be extensively customized through the
+ * options parameter.
+ * 
+ * @public
  */
 export class ButtonController {
 	// Unique id for the button
@@ -70,7 +156,6 @@ export class ButtonController {
 
 	/**
 	 * Create a new Button Controller
-	 *
 	 * @param {ButtonOptions} options - Options for the button controller.
 	 */
 	constructor(options: ButtonOptions) {
@@ -81,7 +166,7 @@ export class ButtonController {
 		this.width = options.width || "1rem";
 		this.height = options.height || "1rem";
 		this.color = options.color || "gray";
-		this.shadow = options.shadow || ``;
+		this.shadow = options.shadow || "";
 		this.rotation = options.rotation || 0;
 		this.radius = options.radius || 5;
 		this.svg = options.svg
@@ -111,18 +196,26 @@ export class ButtonController {
 	}
 
 	/**
-	 * Log a message
-	 * @param message The message to log
+	 * Logs a message to the console if verbose logging is enabled.
+	 * @param message - The message to log
+	 * @example
+	 * ```ts
+	 * button.log("Button pressed"); // Logs: [ButtonController:123] Button pressed
+	 * ```
+	 * @returns {void}
 	 */
-	log(message: string) {
+	log(message: string): void {
 		if (this.verboseLogging)
 			console.log(`[ButtonController:${this.uid}] ${message}`);
 	}
 
 	/**
-	 * Initialize the Button Controller
+	 * Initializes the button controller by setting up necessary event handlers and rendering the button.
+	 * 
+	 * @throws {Error} When button container is not found
+	 * @returns {void}
 	 */
-	init() {
+	init(): void {
 		// Log
 		this.log("Initializing Button Controller...");
 
@@ -155,9 +248,11 @@ export class ButtonController {
 	}
 
 	/**
-	 * Render DOM
+	 * Renders the button element with specified styles and SVG icon if provided
+	 * 
+	 * @returns {void}
 	 */
-	render() {
+	render(): void {
 		// log
 		this.log("Rendering Button...");
 		// calculate border radius
@@ -185,16 +280,14 @@ export class ButtonController {
 		// if there is a svg icon render it
 		if (this.svg) {
 			this.base.appendChild(this.svg);
-			this.svg.style.cssText = `
-              width: fit;
-              height: fit;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              z-index: 1000;
-              color: #FFFFFF;
-              `;
+			this.svg.style.width = 'fit-content';
+			this.svg.style.height = 'fit-content';
+			this.svg.style.position = 'absolute';
+			this.svg.style.top = '50%';
+			this.svg.style.left = '50%';
+			this.svg.style.transform = 'translate(-50%, -50%)';
+			this.svg.style.zIndex = '1000';
+			this.svg.style.color = '#FFFFFF';
 		}
 
 		// add to container
@@ -204,11 +297,11 @@ export class ButtonController {
 	// ***<< EVENT HANDLERS >>***
 
 	/**
-	 * Handle Button Up
-	 *
-	 * This function is called when the button is released.
+	 * Handles the button release event.
+	 * 
+	 * @returns {void}
 	 */
-	onButtonUp() {
+	onButtonUp(): void {
 		if (!this.isPressed) {
 			return;
 		}
@@ -221,11 +314,12 @@ export class ButtonController {
 	}
 
 	/**
-	 * Handle Button Down
-	 *
-	 * This function is called when the button is pressed.
+	 * Handles button down event.
+	 * Sets button state to pressed and triggers callback if defined.
+	 * 
+	 * @returns {void}
 	 */
-	onButtonDown() {
+	onButtonDown(): void {
 		if (this.isPressed) return;
 		this.log("Button Down!");
 		this.isPressed = true;
