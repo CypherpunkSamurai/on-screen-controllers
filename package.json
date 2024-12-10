@@ -1,6 +1,6 @@
 {
   "name": "on-screen-controllers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typescript (and JavaScript) on-screen controllers using DOM apis",
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -15,7 +15,7 @@
     "build": "npm run clean && npm run build:js && npm run build:types",
     "prepublishOnly": "npm run build",
     "version:patch": "standard-version --release-as patch",
-    "version:minor": "standard-version --release-as minor", 
+    "version:minor": "standard-version --release-as minor",
     "version:major": "standard-version --release-as major",
     "release": "npm run build && git push --follow-tags origin master && npm publish --access public",
     "serve": "npx serve ."
@@ -52,14 +52,14 @@
     },
     "./dpad": {
       "types": "./dist/types/dpad.d.ts",
-      "import": "./dist/esm/dpad.js", 
+      "import": "./dist/esm/dpad.js",
       "require": "./dist/cjs/dpad.js",
       "default": "./dist/dpad.min.js"
     },
     "./joystick": {
       "types": "./dist/types/joystick.d.ts",
       "import": "./dist/esm/joystick.js",
-      "require": "./dist/cjs/joystick.js", 
+      "require": "./dist/cjs/joystick.js",
       "default": "./dist/joystick.min.js"
     },
     "./slider": {
