@@ -261,19 +261,15 @@ export class DpadController {
 		this.base.addEventListener("pointerdown", this.onDpadDown.bind(this));
 		this.base.addEventListener("pointermove", this.onDpadMove.bind(this));
 		this.base.addEventListener("pointerup", this.onDpadUp.bind(this));
-		this.base.addEventListener("touchstart", (e: TouchEvent) => {
-			this.onDpadDown(e);
-		});
-		this.base.addEventListener("touchend", (e: TouchEvent) => {
-			e.preventDefault();
-			this.onDpadUp(e);
-		});
+		this.base.addEventListener("pointercancel", this.onDpadUp.bind(this));
 		this.base.addEventListener("selectstart", (e: Event) => {
 			e.preventDefault();
 		});
 		this.base.addEventListener("contextmenu", (e: Event) => {
 			e.preventDefault();
 		});
+		// Enable touch-action manipulation for better touch handling
+		this.base.style.touchAction = "none";
 	}
 
 	/**
