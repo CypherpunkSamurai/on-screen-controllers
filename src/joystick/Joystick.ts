@@ -41,7 +41,7 @@
  * };
  * ```
  */
-interface JoystickControllerOptions {
+export interface JoystickControllerOptions {
 	/** uid - unique id to uniquely identify the joystick controller (default: random string) */
 	uid?: string;
 	/** conatiner - the container where to store the joystick (default: body) */

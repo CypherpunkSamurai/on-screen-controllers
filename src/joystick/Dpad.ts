@@ -64,7 +64,7 @@ type direction =
  * }
  * ```
  */
-interface DpadOptions {
+export interface DpadOptions {
 	/** unique identifier for the D-pad controller (Optional, default: random string) */
 	uid?: string;
 	/** container for the D-pad controller (Optional, default: document.body) */

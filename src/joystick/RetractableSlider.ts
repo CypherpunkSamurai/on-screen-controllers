@@ -11,7 +11,7 @@
  * @property {"vertical"} vertical - Indicates the slider moves vertically.
  * @property {"horizontal"} horizontal - Indicates the slider moves horizontally.
  */
-type direction = "vertical" | "horizontal";
+export type direction = "vertical" | "horizontal";
 
 /**
  * Options for configuring the RetractableSlider Controller.
