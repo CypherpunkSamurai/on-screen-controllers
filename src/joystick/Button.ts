@@ -35,11 +35,11 @@
  * @property {() => void} [onPressCallback] - Function to execute when button is pressed
  * @property {() => void} [onReleaseCallback] - Function to execute when button is released
  *
- * @returns {ButtonOptions} Configuration object for button initialization
+ * @returns {ButtonControllerOptions} Configuration object for button initialization
  *
  * @since 1.0.0
  */
-export interface ButtonOptions {
+export interface ButtonControllerOptions {
 	/** unique identifier for the button */
 	uid?: string;
 	/** container for the button controller (Optional, default: document.body) */
@@ -155,9 +155,9 @@ export class ButtonController {
 
 	/**
 	 * Create a new Button Controller
-	 * @param {ButtonOptions} options - Options for the button controller.
+	 * @param {ButtonControllerOptions} options - Options for the button controller.
 	 */
-	constructor(options: ButtonOptions) {
+	constructor(options: ButtonControllerOptions) {
 		this.uid = options.uid || Math.random().toString(36).substring(7);
 		this.container = options.container || document.body;
 		this.top = options.top || "50%";

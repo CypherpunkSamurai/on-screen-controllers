@@ -5,13 +5,13 @@
  */
 
 /**
- * Represents the direction of the retractable slider.
+ * Represents the direction/orientation of the retractable slider.
  *
- * @typedef {("vertical" | "horizontal")} direction
+ * @typedef {("vertical" | "horizontal")} orientation
  * @property {"vertical"} vertical - Indicates the slider moves vertically.
  * @property {"horizontal"} horizontal - Indicates the slider moves horizontally.
  */
-export type direction = "vertical" | "horizontal";
+export type SliderOrientation = "vertical" | "horizontal";
 
 /**
  * Options for configuring the RetractableSlider Controller.
@@ -27,7 +27,7 @@ export type direction = "vertical" | "horizontal";
  * @property {string} [borderColor="gray"] - Border color of the slider
  * @property {string} [borderWidth="2px"] - Border width of the slider
  * @property {string} [borderRadius="2px"] - Border radius of the slider
- * @property {direction} [direction="vertical"] - Direction of slider movement ("vertical" | "horizontal")
+ * @property {orientation} [orientation="vertical"] - Orientation of slider movement ("vertical" | "horizontal")
  * @property {function} [onSlideCallback] - Callback function triggered during sliding, receives current value
  * @property {function} [onReleaseCallback] - Callback function triggered when slider is released
  * @property {boolean} [verboseLogging=false] - Enable verbose logging for debugging
@@ -42,7 +42,7 @@ export type direction = "vertical" | "horizontal";
  *   width: "150px",
  *   height: "400px",
  *   color: "#FF0000",
- *   direction: "vertical"
+ *   orientation: "vertical"
  * };
  * ```
  */
@@ -67,9 +67,9 @@ export interface RetrackableSliderOptions {
 	borderWidth?: string;
 	// border radius (default: 2px)
 	borderRadius?: string;
-	/** direction of the slider to rotate (default: vertical) */
+	/** direction/orientation of the slider to rotate (default: vertical) */
 	// can be either vertical or horizontal
-	direction?: direction;
+	orientation?: SliderOrientation;
 	/** onSlideCallback is called when the slider cursor is moved */
 	onSlideCallback?: (value: number) => void;
 	/** onReleaseCallback is called when the slider is released */
@@ -89,7 +89,7 @@ export interface RetrackableSliderOptions {
  * ```typescript
  * const slider = new RetrackableSlider({
  *   container: document.getElementById('container'),
- *   direction: 'vertical',
+ *   orientation: 'vertical',
  *   onSlideCallback: (value) => console.log(value)
  * });
  * ```
@@ -104,7 +104,7 @@ export interface RetrackableSliderOptions {
  * @property {string} [borderColor='gray'] - Border color of the slider
  * @property {string} [borderWidth='2px'] - Border width of the slider
  * @property {string} [borderRadius='2px'] - Border radius of the slider
- * @property {('vertical'|'horizontal')} [direction='vertical'] - Direction of slider movement
+ * @property {('vertical'|'horizontal')} [orientation='vertical'] - orientation of slider movement
  * @property {(value: number) => void} [onSlideCallback] - Callback function when sliding
  * @property {() => void} [onReleaseCallback] - Callback function when released
  * @property {boolean} [verboseLogging=false] - Enable verbose console logging
@@ -130,8 +130,8 @@ export class RetrackableSlider {
 	borderWidth: string;
 	// border radius - border radius of the slider
 	borderRadius: string;
-	// direction of the slider
-	direction: string;
+	// orientation of the slider
+	orientation: string;
 	// callbacks
 	// onSlide - callback when the slider is sliding
 	onSlideCallback?: (value: number) => void;
@@ -175,8 +175,8 @@ export class RetrackableSlider {
 		this.borderWidth = options.borderWidth || "2px";
 		// border radius
 		this.borderRadius = options.borderRadius || "2px";
-		// direction
-		this.direction = options.direction || "vertical";
+		// orientation
+		this.orientation = options.orientation || "vertical";
 		// assert that diretion is either vertical or horizontal
 
 		// callbacks
@@ -260,8 +260,8 @@ export class RetrackableSlider {
 		this.baseSlider.style.background = this.color;
 		this.baseSlider.style.pointerEvents = "none";
 
-		// set constants for the slider according to the direction
-		if (this.direction === "vertical") {
+		// set constants for the slider according to the orientation
+		if (this.orientation === "vertical") {
 			// fix base
 			this.baseSlider.style.bottom = "0";
 			// fix
@@ -310,7 +310,7 @@ export class RetrackableSlider {
 		this.log("Updating UI...");
 
 		// set opacity and position
-		if (this.direction === "vertical") {
+		if (this.orientation === "vertical") {
 			// change height only
 			this.baseSlider.style.height = `${this.valuePercent}%`;
 		} else {
@@ -410,7 +410,7 @@ export class RetrackableSlider {
 
 		// calculate the value
 		let value = 0;
-		if (this.direction === "vertical") {
+		if (this.orientation === "vertical") {
 			value =
 				100 - ((e.clientY - this.baseRect!.top) / this.baseRect!.height) * 100;
 		} else {

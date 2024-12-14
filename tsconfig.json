@@ -30,7 +30,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"emitDeclarationOnly": false    // Change to false to ensure both JS and declarations are generated
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "dist"]

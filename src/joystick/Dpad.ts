@@ -25,7 +25,7 @@ const pathData = {
 /**
  * Represents the possible directions for a digital pad (D-pad) input.
  */
-type direction =
+export type DpadDirection =
 	| "center"
 	| "up"
 	| "down"
@@ -84,11 +84,11 @@ export interface DpadOptions {
 	/** onPressCallback is called when the D-pad is pressed.
 	 * directions can be {direction} {"center", "up", "right", "down", "left", "up-right", "down-right", "down-left", "up-left" }
 	 */
-	onPressCallback?: (direction: direction | string) => void;
+	onPressCallback?: (direction: DpadDirection | string) => void;
 	/** onReleaseCallback is called when the D-pad is released.
 	 * directions can be only {"center"}
 	 */
-	onReleaseCallback?: (direction: direction | string) => void;
+	onReleaseCallback?: (direction: DpadDirection | string) => void;
 	/** verbose logging (Optional, default: false) */
 	verboseLogging?: boolean;
 	/** key repeat (repeat key press) (Optional, default: false) */
@@ -151,14 +151,14 @@ export class DpadController {
 	// center radius threshold out of this bound it counts as input
 	centerThreshold?: number;
 	// callback triggered when a direction is pressed
-	onPressCallback: (direction: direction) => void;
+	onPressCallback: (direction: DpadDirection) => void;
 	// callback triggered when a direction is released
-	onReleaseCallback: (direction: direction) => void;
+	onReleaseCallback: (direction: DpadDirection) => void;
 	// verbose logging for debugging
 	verboseLogging: boolean;
 	// variables
 	base: SVGElement;
-	currentDirection: direction = "center";
+	currentDirection: DpadDirection = "center";
 	basePaths: { [key: string]: SVGPathElement };
 	pointerId: number = -1;
 	baseRect: DOMRect | undefined;
@@ -189,7 +189,7 @@ export class DpadController {
 		// callbacks
 		this.onPressCallback =
 			options.onPressCallback ||
-			((direction: direction) => {
+			((direction: DpadDirection) => {
 				if (this.verboseLogging)
 					console.log(
 						`[DpadController:${this.uid}] pressed direction ${direction}!`
@@ -197,7 +197,7 @@ export class DpadController {
 			});
 		this.onReleaseCallback =
 			options.onReleaseCallback ||
-			((direction: direction) => {
+			((direction: DpadDirection) => {
 				if (this.verboseLogging)
 					console.log(
 						`[DpadController:${this.uid}] released direction ${direction}!`
@@ -461,7 +461,7 @@ export class DpadController {
 		const centerDistance = Math.sqrt(x * x + y * y);
 
 		// find directions
-		let direction: direction = "center";
+		let direction: DpadDirection = "center";
 		// check if the distance from the center exceeds the input register threshold
 		if (centerDistance > this.inputRegisterDistance) {
 			if (angle > -22.5 && angle <= 22.5) direction = "right";
