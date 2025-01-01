@@ -6,6 +6,8 @@ A lightweight TypeScript library for adding on-screen game controls to web appli
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
+[👉🏻 View Example](https://cypherpunksamurai.github.io/on-screen-controllers/)
+
 ## Key Features
 
 - 🕹️ **Virtual Joystick**: Responsive analog joystick with customizable appearance and sensitivity
