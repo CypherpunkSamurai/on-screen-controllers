@@ -226,24 +226,25 @@ export class ButtonController {
 		// render button
 		this.render();
 
-		// add event handlers
-		this.log("Adding Event Handlers...");
-		this.container.addEventListener("pointerup", this.onButtonUp.bind(this));
-		this.container.addEventListener(
-			"pointerdown",
-			this.onButtonDown.bind(this)
-		);
-		// prevent default touch events
-		[
-			"touchstart",
-			"touchmove",
-			"touchend",
-			"touchcancel",
-			"selectstart",
-			"contextmenu",
-		].forEach((e) =>
-			this.container.addEventListener(e, (event) => event.preventDefault())
-		);
+		// Touch Events
+		this.base.addEventListener('touchstart', (e) => {
+			e.preventDefault();
+			this.onButtonDown();
+		});
+
+		this.base.addEventListener('touchend', (e) => {
+			e.preventDefault();
+			this.onButtonUp();
+		});
+
+		// Mouse Events
+		this.base.addEventListener('mousedown', () => this.onButtonDown());
+		this.base.addEventListener('mouseup', () => this.onButtonUp());
+		// monkey patch for when clicked and dragged out of button
+		this.base.addEventListener('mouseleave', () => this.onButtonUp());
+
+		// Prevent text selection
+		this.base.addEventListener('selectstart', (e) => e.preventDefault());
 	}
 
 	/**
