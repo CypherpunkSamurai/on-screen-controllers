@@ -6,7 +6,7 @@ A lightweight TypeScript library for adding on-screen game controls to web appli
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
-[👉🏻 View Example](https://cypherpunksamurai.github.io/on-screen-controllers/)
+[![Click to See Live Preview ✨](https://img.shields.io/badge/Click%20to%20See%20Live%20Preview✨-8A2BE2)](https://cypherpunksamurai.github.io/on-screen-controllers/)
 
 ## Key Features
 
@@ -39,18 +39,19 @@ You can now use the library in your JavaScript or TypeScript code:
 
 ```javascript
 const joystick = new OnScreenControllers.JoystickController({
+	uid: "joystick1",
 	container: document.querySelector("body"),
-	top: "50%",
-	left: "50%",
+	top: "20%",
+	left: "75%",
 	radius: 100,
 	color: "gray",
 	thumbColor: "#333",
 	rotation: 0,
 	onInputCallback: (x, y) => {
-		console.log(`Joystick Moved: x=${x}, y=${y}`);
+		console.log(`Joystick 1 Moved: x=${x}, y=${y}`);
 	},
-	onReleaseCallback: (x, y) => {
-		console.log("Joystick Released");
+	onReleaseCallback: () => {
+		console.log("Joystick 1 Released");
 	},
 	verboseLogging: true,
 });
@@ -79,20 +80,19 @@ JoyStickController is a virtual joystick that can be used to control the movemen
 import { JoystickController } from "on-screen-controllers";
 
 const joystick = new JoystickController({
+	uid: "joystick1",
 	container: document.querySelector("body"),
-	top: "50%",
-	left: "50%",
+	top: "20%",
+	left: "75%",
 	radius: 100,
 	color: "gray",
 	thumbColor: "#333",
 	rotation: 0,
 	onInputCallback: (x, y) => {
-		console.log(`Joystick Moved: x=${x}, y=${y}`);
-		joystickOutput.textContent = `Joystick: x=${x}, y=${y}`;
+		console.log(`Joystick 1 Moved: x=${x}, y=${y}`);
 	},
-	onReleaseCallback: (x, y) => {
-		console.log("Joystick Released");
-		joystickOutput.textContent = `Joystick: x=0, y=0`;
+	onReleaseCallback: () => {
+		console.log("Joystick 1 Released");
 	},
 	verboseLogging: true,
 });
@@ -106,19 +106,18 @@ DpadController is a directional pad that can be used to control the movement of 
 import { DpadController } from "on-screen-controllers";
 
 const dpad = new DpadController({
+	uid: "dpad1",
 	container: document.querySelector("body"),
-	top: "50%",
-	left: "50%",
+	top: "20%",
+	left: "25%",
 	colorBase: "#000000",
 	colorsPressed: "#FFFFFF",
 	radius: 100,
 	onPressCallback: (direction) => {
 		console.log(`D-Pad Pressed: ${direction}`);
-		dpadOutput.textContent = `D-pad: ${direction}`;
 	},
-	onReleaseCallback: (direction) => {
-		console.log("test");
-		dpadOutput.textContent = `D-pad: ${direction}`;
+	onReleaseCallback: (_) => {
+		console.log("D-Pad Released");
 	},
 	verboseLogging: false,
 	rotation: -90,
@@ -133,22 +132,21 @@ ButtonController is a simple button that can be used to trigger an action when p
 import { ButtonController } from "on-screen-controllers";
 
 const button = new ButtonController({
+	uid: "button_y",
 	container: document.querySelector("body"),
-	width: "100px",
-	height: "100px",
-	top: "50%",
-	left: "50%",
-	color: "gray",
-	radius: 50,
+	top: "75%",
+	left: "88%",
+	width: "4rem",
+	height: "4rem",
+	radius: 100,
+	color: "#ecdb33",
 	onPressCallback: () => {
-		console.log("Button Pressed");
-		buttonOutput.textContent = "Button: PRESSED";
+		console.log(`Button Y Pressed`);
 	},
 	onReleaseCallback: () => {
-		console.log("Button Released");
-		buttonOutput.textContent = "Button: released";
+		console.log(`Button Y Released`);
 	},
-	verboseLogging: true,
+	verboseLogging: false,
 });
 ```
 
@@ -160,25 +158,20 @@ RetractableSlider is a vertical or horizontal slider that can be used to outpu a
 import { RetractableSlider } from "on-screen-controllers";
 
 const slider = new RetrackableSlider({
+	uid: "slider1",
 	container: document.querySelector("body"),
-	top: "50%",
+	top: "8%",
 	left: "50%",
-	width: "1rem",
-	height: "5rem",
-	color: "gray",
-	borderColor: "gray",
-	borderWidth: "2px",
-	borderRadius: "2px",
-	direction: "vertical",
-	onSlideCallback: (value) => {
-		console.log(`Slider Sliding: ${value}`);
-		sliderOutput.textContent = `Slider: ${value.toFixed(1)}%`;
+	width: "60%",
+	height: "9%",
+	borderColor: "white",
+	orientation: "horizontal",
+	onSlideCallback: (value: number) => {
+		console.log(`Slider 1 Slid: ${value}`);
 	},
 	onReleaseCallback: () => {
-		console.log("Slider Released");
-		sliderOutput.textContent = "Slider: released";
+		console.log("Slider 1 Released");
 	},
-	verboseLogging: true,
 });
 ```
 
