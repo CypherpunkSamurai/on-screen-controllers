@@ -145,9 +145,9 @@ export class ButtonController {
 	// verbose logging
 	verboseLogging: boolean;
 	// callback function for button press
-	onPressCallback: () => void;
+	onPressCallback?: () => void;
 	// callback function for button release
-	onReleaseCallback: () => void;
+	onReleaseCallback?: () => void;
 	// HTML Base Element
 	base: HTMLDivElement;
 	// variables for button state

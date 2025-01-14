@@ -151,9 +151,9 @@ export class DpadController {
 	// center radius threshold out of this bound it counts as input
 	centerThreshold?: number;
 	// callback triggered when a direction is pressed
-	onPressCallback: (direction: DpadDirection) => void;
+	onPressCallback?: (direction: DpadDirection) => void;
 	// callback triggered when a direction is released
-	onReleaseCallback: (direction: DpadDirection) => void;
+	onReleaseCallback?: (direction: DpadDirection) => void;
 	// verbose logging for debugging
 	verboseLogging: boolean;
 	// variables

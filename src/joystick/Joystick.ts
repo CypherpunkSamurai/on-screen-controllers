@@ -61,7 +61,7 @@ export interface JoystickControllerOptions {
 	/** onInputCallback - callback triggered when the joystick is moved */
 	onInputCallback?: (x: number, y: number) => void;
 	/** onReleaseCallback - callback triggered when the joystick is released */
-	onReleaseCallback: () => void;
+	onReleaseCallback?: () => void;
 	/** verbose logging (default: false) */
 	verboseLogging?: boolean;
 }
